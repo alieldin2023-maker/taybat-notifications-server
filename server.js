@@ -4,8 +4,8 @@ const fetch = require("node-fetch");
 const app = express();
 app.use(express.json());
 
-const ONESIGNAL_APP_ID = "PUT_YOUR_APP_ID_HERE";
-const ONESIGNAL_REST_API_KEY = "PUT_YOUR_API_KEY_HERE";
+const ONESIGNAL_APP_ID = process.env.ONESIGNAL_APP_ID;
+const ONESIGNAL_REST_API_KEY = process.env.ONESIGNAL_REST_API_KEY;
 
 app.post("/send-notification", async (req, res) => {
   try {
