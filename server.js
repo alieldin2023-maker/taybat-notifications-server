@@ -17,19 +17,31 @@ app.post("/send-notification", async (req, res) => {
         "Content-Type": "application/json",
         Authorization: `Key ${ONESIGNAL_REST_API_KEY}`,
       },
-      body: JSON.stringify({
-        app_id: ONESIGNAL_APP_ID,
-        include_aliases: {
-          external_id: [receiverId],
-        },
-        target_channel: "push",
-        headings: { en: title },
-        contents: { en: body },
-        data: {
-          type,
-          ...extraData,
-        },
-      }),
+   body: JSON.stringify({
+  app_id: ONESIGNAL_APP_ID,
+  include_aliases: {
+    external_id: [receiverId],
+  },
+  target_channel: "push",
+
+  headings: {
+    en: title,
+    ar: title,
+  },
+
+  contents: {
+    en: body,
+    ar: body,
+  },
+
+  android_accent_color: "FFC91800",
+  small_icon: "ic_stat_taybat",
+
+  data: {
+    type,
+    ...extraData,
+  },
+}),
     });
 
     const data = await response.json();
