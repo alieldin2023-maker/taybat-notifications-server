@@ -54,7 +54,7 @@ app.post("/send-notification", async (req, res) => {
 
 app.post("/send-broadcast", async (req, res) => {
   try {
-    const { title, body } = req.body;
+    const { title, body, action, postId } = req.body;
 
     if (!title || !body) {
       return res.status(400).json({
@@ -87,8 +87,10 @@ app.post("/send-broadcast", async (req, res) => {
         small_icon: "ic_stat_taybat",
 
         data: {
-          type: "broadcast",
-        },
+  type: "broadcast",
+  action: action || "invite",
+  postId: postId || "",
+},
       }),
     });
 
