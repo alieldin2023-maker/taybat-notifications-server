@@ -102,7 +102,37 @@ app.post("/send-broadcast", async (req, res) => {
   }
 });
 
+app.get('/a/:code', async (req, res) => {
+  try {
+    const code = req.params.code;
 
+    if (!code) {
+      return res.status(404).send('Not found');
+    }
+
+    const snap = await admin
+      .firestore()
+      .collection('zego_avatar_links')
+      .doc(code)
+      .get();
+
+    if (!snap.exists) {
+      return res.status(404).send('Avatar not found');
+    }
+
+    const data = snap.data();
+    const imageUrl = data.imageUrl;
+
+    if (!imageUrl || typeof imageUrl !== 'string') {
+      return res.status(404).send('Avatar not found');
+    }
+
+    return res.redirect(302, imageUrl);
+  } catch (e) {
+    console.error('avatar redirect error:', e);
+    return res.status(500).send('Server error');
+  }
+});
 
 app.listen(3000, () => {
   console.log("Server running");
